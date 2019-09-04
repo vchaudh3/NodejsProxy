@@ -2,10 +2,10 @@
 const http = require('http');
 const requestService = require('request');
 const port = 3030;
-const proxyUrl = process.env.PROXYURL || "https://google.com";
+const proxyUrl = process.env.PROXYURL || "https://raw.githubusercontent.com/mcasperson/NodejsProxy/master/helloworld.txt";
 
 const requestHandler = (request, response) => {
-    requestService(proxyUrl, { json: true }, (err, res, body) => {
+    requestService(proxyUrl, (err, res, body) => {
         if (err) {
             response.end(err.toString());
         } else {
