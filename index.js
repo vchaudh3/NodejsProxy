@@ -1,18 +1,25 @@
 // content of index.js
-const http = require('http')
-const port = 3000
+const http = require('http');
+const requestService = require('request');
+const port = 3030;
+const proxyUrl = process.env.PROXYURL || "https://google.com";
 
 const requestHandler = (request, response) => {
-    console.log(request.url)
-    response.end('Hello Node.js Server!')
+    requestService(proxyUrl, { json: true }, (err, res, body) => {
+        if (err) {
+            response.end(err.toString());
+        } else {
+            response.end("Proxying value: " + body);
+        }
+    });
 }
 
-const server = http.createServer(requestHandler)
+const server = http.createServer(requestHandler);
 
 server.listen(port, (err) => {
     if (err) {
-        return console.log('something bad happened', err)
+        return console.log('something bad happened', err);
     }
 
-    console.log(`server is listening on ${port}`)
-})
+    console.log(`server is listening on ${port}`);
+});
