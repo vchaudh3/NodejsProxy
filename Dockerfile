@@ -1,14 +1,12 @@
 FROM alpine
 
 # Update
-RUN apk add --update nodejs
+RUN apk add --update nodejs npm
 
 # Install app dependencies
 COPY package.json /src/package.json
+COPY index.js /src/index.js
 RUN cd /src; npm install
-
-# Bundle app source
-COPY index.js /src
 
 EXPOSE 3030
 CMD ["node", "/src/index.js"]
