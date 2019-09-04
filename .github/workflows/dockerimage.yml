@@ -4,7 +4,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    # Because of https://github.com/actions/checkout/issues/6
+    - uses: actions/checkout@v1
+      # Because of https://github.com/actions/checkout/issues/6
     - name: Reattach HEAD
       run: git checkout "$(echo ${{ github.ref }} | sed -E 's|refs/[a-zA-Z]+/||')"
     - name: Get Git Version
