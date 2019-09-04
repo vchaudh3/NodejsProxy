@@ -5,9 +5,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
+    - uses: actions/docker/login@master
+      env:
+        DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+        DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
     - name: Get Git Version
       uses: docker://gittools/gitversion:5.0.2-beta1-27-linux-centos-7-netcoreapp2.2
       with:
         args: /github/workspace /nofetch /exec /bin/sh /execargs "-c \"echo $GitVersion_FullSemVer > /github/workspace/version.txt\""
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag ${{ secrets.DockerhubUsername }}/simpleproxy:$(cat /home/runner/work/NodejsProxy/NodejsProxy/version.txt)
+      run: docker build . --file Dockerfile --tag ${{ secrets.DOCKER_USERNAME }}/simpleproxy:$(cat /home/runner/work/NodejsProxy/NodejsProxy/version.txt)
+    - name: Push the Docker image
+      run: docker push ${{ secrets.DOCKER_USERNAME }}/simpleproxy:$(cat /home/runner/work/NodejsProxy/NodejsProxy/version.txt)
