@@ -10,4 +10,4 @@ jobs:
       with:
         args: /github/workspace /nofetch /exec /bin/sh /execargs "-c \"echo $GitVersion_FullSemVer > /github/workspace/version.txt\""
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag ${{ secrets.DockerhubUsername }}/SimpleProxy:$(cat /home/runner/work/NodejsProxy/NodejsProxy/version.txt)
+      run: docker build . --file Dockerfile --tag ${{ secrets.DockerhubUsername }}/simpleproxy:$(cat /home/runner/work/NodejsProxy/NodejsProxy/version.txt)
