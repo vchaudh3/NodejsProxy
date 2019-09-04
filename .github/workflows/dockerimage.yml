@@ -9,6 +9,7 @@ jobs:
       env:
         DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
         DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+        DOCKER_REGISTRY_URL: docker.io
     - name: Get Git Version
       uses: docker://gittools/gitversion:5.0.2-beta1-27-linux-centos-7-netcoreapp2.2
       with:
@@ -16,4 +17,4 @@ jobs:
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag ${{ secrets.DOCKER_USERNAME }}/simpleproxy:$(cat /home/runner/work/NodejsProxy/NodejsProxy/version.txt)
     - name: Push the Docker image
-      run: docker push ${{ secrets.DOCKER_USERNAME }}/simpleproxy:$(cat /home/runner/work/NodejsProxy/NodejsProxy/version.txt)
+      run: docker push docker.io/${{ secrets.DOCKER_USERNAME }}/simpleproxy:$(cat /home/runner/work/NodejsProxy/NodejsProxy/version.txt)
