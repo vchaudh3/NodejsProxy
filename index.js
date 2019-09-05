@@ -5,11 +5,13 @@ const port = 3030;
 const proxyUrl = process.env.PROXYURL || "https://raw.githubusercontent.com/mcasperson/NodejsProxy/master/helloworld.txt";
 
 const requestHandler = (request, response) => {
+    const start = new Date().getTime();
     requestService(proxyUrl, (err, res, body) => {
+        const duration = new Date().getTime() - start;
         if (err) {
-            response.end(err.toString());
+            response.end(err.toString() + " - Took " + duration + " milliseconds");
         } else {
-            response.end("Proxying value: " + body);
+            response.end("Proxying value: " + body + " - Took " + duration + " milliseconds");
         }
     });
 }
