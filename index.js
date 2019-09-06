@@ -8,7 +8,7 @@ const proxyUrl = process.env.PROXYURL || "https://raw.githubusercontent.com/mcas
 const requestHandler = (request, response) => {
     const path = url.parse(request.url).pathname;
     const start = new Date().getTime();
-    requestService(proxyUrl + path, (err, res, body) => {
+    requestService(proxyUrl + (path == "/" ? "" : path), (err, res, body) => {
         const duration = new Date().getTime() - start;
         if (err) {
             response.end(err.toString() + " - Took " + duration + " milliseconds");
